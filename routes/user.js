@@ -1,8 +1,12 @@
 const express = require('express');
-const { createUser, getUsers, getById, updateUser, deleteUser} = require('../modules/User/User.Controller');
+const { createUser, getUsers, getById, updateUser, deleteUser,userLogin} = require('../modules/User/User.Controller');
 const userRouter = express.Router();
 const multer = require('multer');
 const path = require('path');
+const {basicAuthentication} = require('../middleware/basicAuthentication');
+const { verifyToken } = require('../middleware/jwtAuthentication');
+
+
 
 // Configure Multer to store uploaded files
 const storage = multer.diskStorage({
@@ -18,8 +22,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Handle user creation route
+userRouter.use(verifyToken);
 userRouter.post('/create', upload.single('image'), createUser);
+
 userRouter.get('/getAllUsers',getUsers);
+userRouter.post('/login',userLogin);
+
 userRouter.get('/:id',getById);
 userRouter.patch('/:id', updateUser);
 userRouter.delete('/:id', deleteUser);

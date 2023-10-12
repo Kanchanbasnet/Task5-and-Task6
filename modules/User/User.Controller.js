@@ -1,7 +1,8 @@
 const User = require('../../models/User.Model');
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+const bcrypt = require('bcrypt');
+
+const jwt = require('jsonwebtoken'); 
 
 
 
@@ -11,26 +12,75 @@ const fs = require('fs');
 
 exports.createUser = async (req, res) => {
   try {
-    const user = new User({
-      name: req.body.name,
-      email: req.body.email,
-      location: req.body.location,
-      image: req.file.filename, 
-    });
+      const userExist = await User.findOne({ username: req.body.username });
 
-    const userExist = await User.findOne({ email: req.body.email });
+      if (userExist) {
+          return res.status(400).json({ message: 'User already exists.' });
+      }
 
-    if (!userExist) {
+      const bcryptedPassword = await bcrypt.hash(req.body.password, 10);
+
+      const user = new User({
+          username: req.body.username,
+          password: bcryptedPassword,
+          name: req.body.name,
+          address: req.body.address,
+          image: req.file.filename,
+      });
+
       const newUser = await user.save();
-      return res.status(200).send({ data: newUser, message: "User Created Successfully." });
-    } else {
-      return res.send("User exists.");
-    }
+
+      const payload = {
+          user: {
+              _id: newUser._id,
+              name: newUser.name,
+              password: newUser.password,
+              image: newUser.image,
+          }
+      };
+
+      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h' });
+
+      return res.status(200).json({ token, data: newUser, message: 'User Created Successfully.' });
   } catch (error) {
-    console.log(error);
-    return res.status(500).send({ message: 'Internal server error.' });
+      console.error(error);
+      return res.status(500).json({ message: 'Internal server error.' });
   }
 };
+exports.userLogin = async(req,res)=>{
+  try{
+    const {username , password} = req.body;
+    const userExist = await User.findOne({username})
+    if(!userExist){
+      return res.status(404).send(`User with the ${username} does not exist.`)
+    }
+    const comparePassword = await bcrypt.compare(password,userExist.password);
+    if(comparePassword){
+      const userResult ={
+        _id:userExist._id,
+        name:userExist.name,
+        password:userExist.password,
+        image:userExist.image,
+      }
+      //creating a token
+      const token = jwt.sign({ user: userResult }, process.env.JWT_SECRET, { expiresIn: "2h" });
+      
+      
+      return res.status(200).send({userResult, token, message:"Login Successfull"})
+
+    }
+    else{
+      return res.status(200).send({message:'Login details are incorrect.'})
+    }
+    
+  }
+  catch(error){
+    console.log(error);
+    return res.status(500).send('Internal Server Error.');
+
+  }
+}
+
 exports.getUsers = async(req,res)=>{
   try{
       const users = await User.find();
@@ -45,7 +95,10 @@ exports.getUsers = async(req,res)=>{
 
   }
 
+
+
 }
+
 exports.getById = async(req,res)=>{
   try{
       const id = req.params.id;
