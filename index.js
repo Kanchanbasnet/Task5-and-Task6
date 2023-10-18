@@ -7,10 +7,11 @@ const userRouter = require('../node-app/routes/user.js');
 const multer = require('multer')
 const productRouter = require('../node-app/routes/product.js');
 const storeRouter = require('../node-app/routes/store.js');
+const cors = require('cors');
 
 const app = express();
 dotenv.config();
-
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 

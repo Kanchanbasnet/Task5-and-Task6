@@ -3,10 +3,33 @@ const multer = require('multer');
 const bcrypt = require('bcrypt');
 
 const jwt = require('jsonwebtoken'); 
+const {admin} = require('../../firebase/admin');
 
 
 
 
+exports.registerUser = async (req,res)=>{
+
+    const token = req.body.token;
+    try {
+      const decodedToken = await admin.auth().verifyIdToken(token);
+      const uid = decodedToken.uid;
+  
+      const userRecord = await admin.auth().getUser(uid);
+      const userExist =  await User.findOne({email: userRecord.email}) 
+          const createUser ={
+            name:userRecord.displayName,
+            email:userRecord.email
+          }
+        if(!userExist){
+         await User.create(createUser)
+        }
+        res.json(userRecord);
+    } catch (error) {
+      console.error('Error verifying token or fetching user data:', error);
+      res.status(400).json({ error: 'Token verification failed' });
+    }
+  }
 
 
 

@@ -1,5 +1,5 @@
 const express = require('express');
-const { createUser, getUsers, getById, updateUser, deleteUser,userLogin} = require('../modules/User/User.Controller');
+const { createUser, getUsers, getById, updateUser, deleteUser,userLogin, registerUser} = require('../modules/User/User.Controller');
 const userRouter = express.Router();
 const multer = require('multer');
 const path = require('path');
@@ -31,6 +31,8 @@ userRouter.post('/login',userLogin);
 userRouter.get('/:id',getById);
 userRouter.patch('/:id', updateUser);
 userRouter.delete('/:id', deleteUser);
+
+userRouter.post('/auth/register',registerUser);
 
 
 module.exports = userRouter;
