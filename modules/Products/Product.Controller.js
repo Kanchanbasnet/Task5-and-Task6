@@ -17,22 +17,21 @@ exports.getProducts = async (req,res)=>{
 
     }
 }
-exports.outOfStock= async (req,res)=>{
-    try{
-        const outOfStock = await Product.find({quantity:{$lt:5}});
-        return res.status(400).send(outOfStock);
-
+exports.outOfStock = async (req, res) => {
+    try {
+      const outOfStock = await Product.find({ quantity: { $lt: 5 } });
+      return res.status(200).send(outOfStock);
+    } catch (error) {
+      res.status(500).send(error);
     }
-    catch(error){
-        res.send(error);
-    }
-}
+  };
+  
 exports.getProduct = async (req,res)=>{
     try{
         const id = req.params.id;
         const productExist = await Product.findOne({_id:id});
         if(!productExist){
-            return res.status(404).send('Product Exist.');
+            return res.status(404).send('Product  does not Exist.');
         }
         return res.status(200).send(productExist);
     }
@@ -52,7 +51,7 @@ exports.createProduct = async (req, res) => {
       description: req.body.description,
       quantity: req.body.quantity,
       productType: req.body.productType,
-      image: req.file.filename,
+    //   image: req.file.filename,
     });
 
     // Check if a product with the same ID exists (assuming you meant to check for ID uniqueness)
@@ -80,11 +79,11 @@ exports.createProduct = async (req, res) => {
 exports.updateProduct = async(req,res)=>{
     try{
         const id = req.params.id;
-        const productExist = await product.findOne({_id:id});
+        const productExist = await Product.findOne({_id:id});
         if(!productExist){
             return res.status(404).send('Product does not exist.')
         }
-        const updateProduct= await product.findByIdAndUpdate(id, req.body, {new:true});
+        const updateProduct= await Product.findByIdAndUpdate(id, req.body, {new:true});
         return res.status(200).send(updateProduct);
 
     }
@@ -98,12 +97,12 @@ exports.updateProduct = async(req,res)=>{
 exports.updateQuantity= async(req,res)=>{
     try{
         const id = req.params.id;
-        const productExist = await product.findOne({_id:id});
+        const productExist = await Product.findOne({_id:id});
         if(!productExist){
             return res.status(404).send('Product does not exist.');
         }
         const updateQuantity = {quantity: req.body.quantity || product.quantity};
-        const updatedQuantity = await product.findByIdAndUpdate(id, updateQuantity, {new:true});
+        const updatedQuantity = await Product.findByIdAndUpdate(id, updateQuantity, {new:true});
         return res.status(200).send(updatedQuantity);
 
     }
@@ -119,7 +118,7 @@ exports.deleteProduct = async(req,res)=>{
         if(!productExist){
             return res.status(404).send('Product does not exist.')
         }
-        await product.findByIdAndDelete(id);
+        await Product.findByIdAndDelete(id);
         res.status(404).send("Product Deleted Successfully.");
     }
     catch(error){

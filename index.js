@@ -4,10 +4,13 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const PORT = 3000;
 const userRouter = require('../node-app/routes/user.js');
-const multer = require('multer')
 const productRouter = require('../node-app/routes/product.js');
 const storeRouter = require('../node-app/routes/store.js');
 const cors = require('cors');
+const swaggerUI = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
+
+
 
 const app = express();
 dotenv.config();
@@ -28,8 +31,30 @@ mongoose.connect(DB_CONNECT)
         console.error("Could not connect to the database:", err); 
     });
 
+const options ={
+    definition:{
+     openapi:"3.0.0",
+     info:{
+        title:"Ecommerce API",
+        version:"1.0.0",
+        description:"This is the REST API application made with express. It is a simple Express Ecommerce API."
+
+     },
+     servers:[{
+        url:"http://localhost:3000"
+     }]
+    },
+    apis:['../node-app/routes/*.js']  
+}
+const specs = swaggerJsDoc(options);
+
+
+
 app.use('/users',userRouter);
 app.use('/products',productRouter);
 app.use('/store',storeRouter);
+app.use('/docs',swaggerUI.serve, swaggerUI.setup(specs))
+
+
 
 

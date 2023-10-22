@@ -42,13 +42,14 @@ exports.createUser = async (req, res) => {
       }
 
       const bcryptedPassword = await bcrypt.hash(req.body.password, 10);
-
+      // const filename = await req.image.filename();
       const user = new User({
           username: req.body.username,
           password: bcryptedPassword,
           name: req.body.name,
           address: req.body.address,
-          image: req.file.filename,
+          //  image: req.file.filename,
+          
       });
 
       const newUser = await user.save();
@@ -58,7 +59,7 @@ exports.createUser = async (req, res) => {
               _id: newUser._id,
               name: newUser.name,
               password: newUser.password,
-              image: newUser.image,
+            //  image: newUser.image,
           }
       };
 
@@ -136,25 +137,62 @@ exports.getById = async(req,res)=>{
       console.error(`Internal Server Error.`);
   }
 }
-exports.updateUser = async(req,res) =>{
-  try{
-      const id = req.params.id;
+// exports.updateUser = async(req,res) =>{
+//   try{
+//       const id = req.params.id;
      
-      const userExist = await User.findOne({_id:id});
+//       const userExist = await User.findOne({_id:id});
       
-      if(!userExist){
-          return res.status(404).send("User does not exist");
-      }
-      const updateUser = await User.findByIdAndUpdate(id, req.body,{new:true});
-      res.status(201).send(updateUser);
+//       if(!userExist){
+//           return res.status(404).send("User does not exist");
+//       }
+//       const updateUser = await User.findByIdAndUpdate(id, req.body,{new:true});
+//       res.status(201).send(updateUser);
 
 
+//   }
+//   catch(error){
+//       console.log(error);
+//       res.status(500).send('Internal Server Error.')
+
+//   }
+// }
+exports.updateUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const userExist = await User.findOne({ _id: id });
+
+    if (!userExist) {
+      return res.status(404).send("User does not exist");
+    }
+
+    const updatedFields = {};
+
+    
+    if (req.body.name) {
+      updatedFields.name = req.body.name;
+    }
+    if (req.body.username) {
+      updatedFields.username = req.body.username;
+    }
+    if (req.body.email) {
+      updatedFields.email = req.body.email;
+    }
+
+   
+    if (req.file) {
+      
+      updatedFields.image = req.file.filename; 
+    }
+
+    const updateUser = await User.findByIdAndUpdate(id, { $set: updatedFields }, { new: true });
+    res.status(200).json(updateUser);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
   }
-  catch(error){
-      console.error(`Internal Server Error.`);
+};
 
-  }
-}
 exports.deleteUser = async(req,res)=>{
   try{
       const id = req.params.id;
