@@ -49,21 +49,22 @@ exports.getOrder = async (req,res) =>{
   }
   }
   
-exports.getOrderById = async (req,res) =>{
-  try{
-      const orderId = req.params.id;
-      const getOrder = await Order.findById(orderId)
-      if(!getOrder){
-          return res.status(404).json('Order id does not exist.');
+  exports.getOrderById = async (req, res) => {
+    try {
+      const orderId = req.params.orderId;
+      const getOrder = await Order.findById(orderId);
+  
+      if (!getOrder) {
+        return res.status(404).json({ error: 'Order not found.' });
       }
-      res.status(200).send(getOrder);
-  }
-  catch(error){
+  
+      res.status(200).json(getOrder);
+    } catch (error) {
       console.log(error);
-      res.status(500).send('Internal server Error');
+      res.status(500).json({ error: 'Internal server error' });
+    }
   }
-}
-
+  
 
 
 

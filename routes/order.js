@@ -6,25 +6,28 @@ const orderRouter = express.Router();
 
 /**
  * @swagger
- * /orders/checkout/{id}:
- *      post:
- *          summary: Check out a cart.
- *          description: Checkout a user's cart and generate order only when the minimum order is greater than Rs.500.
- *          parameters:
- *            - in: path
- *              name: id
- *              required: true
- *              description: Id of the Cart.
- *              schema:
- *                  type: string
- *      responses:
- *          200: 
- *              description: Order Generated Successfully.
- *          400:
- *              description: Minimum Order for checkout is Rs. 500.
- *          500:
- *              description: Internal Server Error. 
+ * /orders/checkout/{cartId}:
+ *   post:
+ *     summary: Checkout a cart
+ *     description: Checkout a user's cart and generate an order when the minimum order is greater than Rs. 500.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Id of the Cart.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Order Generated Successfully.
+ *       400:
+ *         description: Minimum Order for checkout is Rs. 500.
+ *       500:
+ *         description: Internal Server Error.
  */
+
+
+
 
 orderRouter.post('/checkout/:cartId',checkout);
 

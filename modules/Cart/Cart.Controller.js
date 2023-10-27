@@ -123,12 +123,12 @@ exports.addToCart = async (req, res) => {
 
   exports.getAllCart = async (req,res)=>{
     try{
-      const Cart = await Cart.find({}).populate('userId').populate('items.productId');
-      if(!Cart){
+      const cart = await Cart.find({}).populate('userId').populate('items.productId');
+      if(!cart){
         return res.status(404).send("Cart does not exist.");
       }
       else{
-        return res.status(200).send(Cart);
+        return res.status(200).send(cart);
       }
   
   
