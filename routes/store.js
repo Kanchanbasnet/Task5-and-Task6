@@ -25,8 +25,82 @@ const upload = multer({ storage: storage });
 
 
 
+
+
 storeRouter.post('/create', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'logo', maxCount: 1 }]), createStore);
+/**
+ * @swagger
+ * /store/create:
+ *   post:
+ *     summary: Create a new store
+ *     requestBody:
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: string
+ *               storeName:
+ *                 type: string
+ *               logo:
+ *                 type: file
+ *               image:
+ *                 type: file
+ *               storeType:
+ *                 type: string
+ *                 enum: ['Electronics', 'Grocery', 'Clothing', 'Stationery']
+ *               address:
+ *                 type: string
+ *               latitude:
+ *                 type: number
+ *               longitude:
+ *                 type: number
+ *     responses:
+ *       "201":
+ *         description: Store created Successfully.
+ *       "400":
+ *         description: Store already exists.
+ *       "500":
+ *         description: Internal Server Error.
+ */
 storeRouter.get('/',getStore);
+/**
+ * @swagger
+ * /store:
+ *   get:
+ *     summary: Get all stores
+ *     responses:
+ *       "200":
+ *         description: A list of all stores.
+ *       "404":
+ *         description: No stores found.
+ *       "500":
+ *         description: Internal Server Error.
+ */
 storeRouter.post('/findNearestStore',findStore);
+/**
+ * @swagger
+ * /store/findNearestStore:
+ *   post:
+ *     summary: Find the nearest stores
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               latitude:
+ *                 type: number
+ *               longitude:
+ *                 type: number
+ *     responses:
+ *       "200":
+ *         description: Nearest stores found successfully.
+ *       "404":
+ *         description: No stores found.
+ *       "500":
+ *         description: Internal Server Error.
+ */
 module.exports = storeRouter;
 
