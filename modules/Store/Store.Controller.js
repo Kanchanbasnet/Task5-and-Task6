@@ -51,32 +51,62 @@ exports.getStore = async (req,res)=>{
     }
 }
 
-exports.findStore = async(req,res) =>{
-    try{
-        const latitude = req.body.latitude;
-        const longitude = req.body.longitude;
+// exports.findStore = async(req,res) =>{
+//     try{
+//         const latitude = req.body.latitude;
+//         const longitude = req.body.longitude;
 
-        const storeData = await Store.aggregate([
-            {
-              $geoNear:{
-                near:{type:"Point", 
-                coordinates:[parseFloat(longitude),parseFloat(latitude)]
-            },
-                key:"location",
-                maxDistance:parseFloat(5000)*1609,
-                distanceField:'dist.calculated',
-                spherical:true
-              }  
-            }
-        ])
+//         const storeData = await Store.aggregate([
+//             {
+//               $geoNear:{
+//                 near:{type:"Point", 
+//                 coordinates:[parseFloat(longitude),parseFloat(latitude)]
+//             },
+//                 key:"location",
+//                 maxDistance:parseFloat(10000)*1609,
+//                 distanceField:'dist.calculated',
+//                 spherical:true
+//               }  
+//             }
+//         ])
 
-        res.status(200).send({data:storeData})
+//         res.status(200).send({data:storeData})
 
 
-    }
-    catch(error){
-        console.log(error)
-        res.send(error);
-    }
+//     }
+//     catch(error){
+//         console.log(error)
+//         res.send(error);
+//     }
+// }
+
+exports.findStore = async (req, res) => {
+  try {
+      const latitude = req.body.latitude;
+      const longitude = req.body.longitude;
+
+      const storeData = await Store.aggregate([
+          {
+              $geoNear: {
+                  near: {
+                      type: "Point",
+                      coordinates: [parseFloat(latitude), parseFloat(longitude)]
+                  },
+                  key: "location",
+                  maxDistance:parseFloat(10000)*1609,
+                  distanceField: 'dist.calculated',
+                  spherical: true
+              }
+          },
+          {
+              $sort: { 'dist.calculated': 1 } // Sort by calculated distance in ascending order
+          }
+      ]);
+
+      res.status(200).send({ data: storeData });
+  } catch (error) {
+      console.log(error);
+      res.send(error);
+  }
 }
 

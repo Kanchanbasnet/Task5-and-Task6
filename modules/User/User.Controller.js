@@ -48,7 +48,7 @@ exports.createUser = async (req, res) => {
           password: bcryptedPassword,
           name: req.body.name,
           address: req.body.address,
-          //  image: req.file.filename,
+          image: req.file.filename,
           
       });
 

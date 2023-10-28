@@ -51,7 +51,7 @@ exports.createProduct = async (req, res) => {
       description: req.body.description,
       quantity: req.body.quantity,
       productType: req.body.productType,
-    //   image: req.file.filename,
+      image: req.file.filename,
     });
 
     // Check if a product with the same ID exists (assuming you meant to check for ID uniqueness)

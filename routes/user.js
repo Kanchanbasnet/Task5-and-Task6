@@ -26,7 +26,7 @@ const swaggerJsDoc = require('swagger-jsdoc');
  *         email:
  *           type: string
  *         image:
- *           type: string
+ *           type: file
  *       example:
  *         id: "65d34"
  *         name: "John Doe"
@@ -96,7 +96,7 @@ userRouter.get('/:id', getById);
  *               email:
  *                 type: string
  *               image:
- *                 type: string
+ *                 type: file
  *           required: [name, username, password, email]
  *     responses:
  *       200:
@@ -174,7 +174,7 @@ userRouter.post('/login', userLogin);
  *               email:
  *                 type: string
  *               image:
- *                 type: string
+ *                 type: file
  *           required: []
  *     responses:
  *       200:

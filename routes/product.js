@@ -25,7 +25,7 @@ const upload = require('../middleware/multerconfig');
  *         productType:
  *           type: string
  *         image:
- *           type: string
+ *           type: file
  *       example:
  *         productId: "65d34"
  *         name: "Laptop"
@@ -60,7 +60,7 @@ const upload = require('../middleware/multerconfig');
  *               productType:
  *                 type: string
  *               image:
- *                 type: string
+ *                 type: file
  *     responses:
  *       200:
  *         description: Product created successfully.
@@ -159,6 +159,8 @@ productRouter.get('/:id', getProduct);
  *                 type: integer
  *               productType:
  *                 type: string
+ *               image:
+ *                 type: file 
  *     responses:
  *       200:
  *         description: Product updated successfully.
