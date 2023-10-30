@@ -5,6 +5,13 @@ const multer = require('multer');
 const path = require('path');
 const upload = require('../middleware/multerconfig');
 
+
+/**
+ * @swagger
+ * tags:
+ *      name: Products
+ *      description: Operations regarding Products.
+ */
 /**
  * @swagger
  * components:
@@ -42,6 +49,7 @@ const upload = require('../middleware/multerconfig');
  *   post:
  *     summary: Create a new product
  *     description: Create a new product with the provided information and an optional image upload.
+ *     tags: [Products]
  *     requestBody:
  *       required: false
  *       content:
@@ -80,6 +88,7 @@ productRouter.post('/create', upload.single('image'), createProduct);
  *   get:
  *     summary: Get all products with their details.
  *     description: Retrieve a list of all Products from the MongoDB.
+ *     tags: [Products]
  *     responses:
  *       200:
  *         description: Successful response with Products details.
@@ -91,6 +100,7 @@ productRouter.get('/', getProducts);
  *   get:
  *     summary: Get products that are out of stock.
  *     description: Retrieve a list of products that are out of stock.
+ *     tags: [Products]
  *     responses:
  *       200:
  *         description: Successful response with out-of-stock products.
@@ -110,6 +120,7 @@ productRouter.get('/outOfStock', outOfStock);
  *   get:
  *     summary: Get product by ID
  *     description: Retrieve a product by its unique ID.
+ *     tags: [Products]
  *     parameters:
  *       - in: path
  *         name: id
@@ -135,6 +146,7 @@ productRouter.get('/:id', getProduct);
  *   put:
  *     summary: Update an existing Product by ID with File Upload
  *     description: Update an existing Product with the provided information and optional file upload.
+ *     tags: [Products] 
  *     parameters:
  *       - in: path
  *         name: id
@@ -181,6 +193,7 @@ productRouter.put('/:id', updateProduct);
  *   delete:
  *     summary: Delete product by ID
  *     description: Delete a product by their unique ID.
+ *     tags: [Products]
  *     parameters:
  *       - in: path
  *         name: id
@@ -206,6 +219,7 @@ productRouter.delete('/:id', deleteProduct);
  *   patch:
  *     summary: Update an existing Product's quantity by ID
  *     description: Update the quantity of an existing product with the provided quantity value.
+ *     tags: [Products]
  *     parameters:
  *       - in: path
  *         name: id

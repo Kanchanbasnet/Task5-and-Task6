@@ -23,6 +23,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+/**
+ * @swagger
+ * tags:
+ *      name: Stores
+ *      description: Operations regarding Stores.
+ */
 
 
 
@@ -33,6 +39,7 @@ storeRouter.post('/create', upload.fields([{ name: 'image', maxCount: 1 }, { nam
  * /store/create:
  *   post:
  *     summary: Create a new store
+ *     tags: [Stores]
  *     requestBody:
  *       content:
  *         multipart/form-data:
@@ -70,6 +77,7 @@ storeRouter.get('/',getStore);
  * /store:
  *   get:
  *     summary: Get all stores
+ *     tags: [Stores]
  *     responses:
  *       "200":
  *         description: A list of all stores.
@@ -84,6 +92,7 @@ storeRouter.post('/findNearestStore',findStore);
  * /store/findNearestStore:
  *   post:
  *     summary: Find the nearest stores
+ *     tags: [Stores]
  *     requestBody:
  *       content:
  *         application/json:

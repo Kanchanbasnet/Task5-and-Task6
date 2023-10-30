@@ -3,6 +3,13 @@ const {getOrderById, checkout,getOrder}= require('../modules/Order/Order.Control
 
 const orderRouter = express.Router();
 
+/**
+ * @swagger
+ * tags:
+ *      name: Orders
+ *      description: Operations regarding Orders.
+ */
+
 
 /**
  * @swagger
@@ -10,6 +17,7 @@ const orderRouter = express.Router();
  *   post:
  *     summary: Checkout a cart
  *     description: Checkout a user's cart and generate an order when the minimum order is greater than Rs. 500.
+ *     tags: [Orders]
  *     parameters:
  *       - in: path
  *         name: id
@@ -38,6 +46,7 @@ orderRouter.post('/checkout/:cartId',checkout);
  *   get:
  *     summary: Get all orders
  *     description: Retrieve a list of all orders from the MongoDB.
+ *     tags: [Orders]
  *     responses:
  *       200:
  *         description: Successful response with order details.
@@ -49,6 +58,7 @@ orderRouter.get('/',getOrder);
  * /orders/{orderId}:
  *   get:
  *     summary: Get an order by ID.
+ *     tags: [Orders]
  *     parameters:
  *       - in: path
  *         name: orderId

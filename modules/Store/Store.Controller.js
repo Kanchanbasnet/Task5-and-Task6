@@ -93,14 +93,12 @@ exports.findStore = async (req, res) => {
                       coordinates: [parseFloat(latitude), parseFloat(longitude)]
                   },
                   key: "location",
-                  maxDistance:parseFloat(10000)*1609,
+                  maxDistance:1000,
                   distanceField: 'dist.calculated',
                   spherical: true
               }
           },
-          {
-              $sort: { 'dist.calculated': 1 } // Sort by calculated distance in ascending order
-          }
+          
       ]);
 
       res.status(200).send({ data: storeData });

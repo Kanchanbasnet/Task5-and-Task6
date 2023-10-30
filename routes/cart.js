@@ -5,9 +5,17 @@ const {addToCart, getAllCart, getOne} = require('../modules/Cart/Cart.Controller
 
 /**
  * @swagger
+ * tags:
+ *      name: Carts
+ *      description: Operations regarding Carts.
+ */
+
+/**
+ * @swagger
  * /cart/addToCart:
  *   post:
  *     summary: Add items to the Cart.
+ *     tags: [Carts]
  *     requestBody:
  *       content:
  *         application/json:
@@ -42,6 +50,7 @@ cartRouter.post('/addToCart',addToCart);
  * /cart:
  *   get:
  *     summary: Get all shopping carts.
+ *     tags: [Carts]
  *     responses:
  *       "200":
  *         description: A list of all shopping carts.
@@ -58,6 +67,7 @@ cartRouter.get('/',getAllCart)
  * /cart/{cartId}:
  *   get:
  *     summary: Get a shopping cart by ID.
+ *     tags: [Carts]
  *     parameters:
  *       - in: path
  *         name: cartId

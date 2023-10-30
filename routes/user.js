@@ -8,6 +8,13 @@ const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 
 
+
+/**
+ * @swagger
+ * tags:
+ *      name: Users
+ *      description: Operations regarding Users.
+ */
 /**
  * @swagger
  * components:
@@ -41,6 +48,7 @@ const swaggerJsDoc = require('swagger-jsdoc');
  * /users/getAllUsers:
  *   get:
  *     summary: Get all users
+ *     tags: [Users]
  *     description: Retrieve a list of all users from the MongoDB.
  *     responses:
  *       200:
@@ -53,6 +61,7 @@ userRouter.get('/getAllUsers', getUsers);
  * /users/{id}:
  *   get:
  *     summary: Get user by ID
+ *     tags: [Users]
  *     description: Retrieve a user by their unique ID.
  *     parameters:
  *       - in: path
@@ -79,6 +88,7 @@ userRouter.get('/:id', getById);
  * /users/create:
  *   post:
  *     summary: Create a new User
+ *     tags: [Users]
  *     description: Create a new user with the provided information and an optional image upload.
  *     requestBody:
  *       required: false
@@ -119,6 +129,7 @@ userRouter.post('/create', upload.single('image'), createUser);
  * /users/login:
  *   post:
  *     summary: User login with username and password
+ *     tags: [Users]
  *     description: Authenticate a user by providing their username and password.
  *     requestBody:
  *       required: true
@@ -152,6 +163,7 @@ userRouter.post('/login', userLogin);
  * /users/{id}:
  *   patch:
  *     summary: Update an existing User by ID with File Upload
+ *     tags: [Users]
  *     description: Update an existing user with the provided information and optional file upload.
  *     parameters:
  *       - in: path
@@ -196,6 +208,7 @@ userRouter.patch('/:id', upload.single('image'), updateUser);
  * /users/{id}:
  *   delete:
  *     summary: Delete user by ID
+ *     tags: [Users]
  *     description: Delete a user by their unique ID.
  *     parameters:
  *       - in: path
