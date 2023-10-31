@@ -42,12 +42,12 @@ exports.createUser = async (req, res) => {
       }
 
       const bcryptedPassword = await bcrypt.hash(req.body.password, 10);
-      // const filename = await req.image.filename();
       const user = new User({
           username: req.body.username,
           password: bcryptedPassword,
           name: req.body.name,
           address: req.body.address,
+          email: req.body.email,
           image: req.file.filename,
           
       });
@@ -59,7 +59,7 @@ exports.createUser = async (req, res) => {
               _id: newUser._id,
               name: newUser.name,
               password: newUser.password,
-            //  image: newUser.image,
+            
           }
       };
 

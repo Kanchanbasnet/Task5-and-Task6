@@ -1,0 +1,88 @@
+<mjml>
+  <mj-body>
+    <mj-container>
+      <!-- Header Section -->
+      <mj-section>
+        <mj-column width="50%">
+          <mj-image src="logo.png" width="100px" />
+        </mj-column>
+        <mj-column width="50%">
+          <mj-text font-size="20px" font-weight="bold">Kanchan Ecommerce Store</mj-text>
+          <mj-text>Address: Chakrapath, Kathmandu</mj-text>
+          <mj-text>Telephone: 9849614464</mj-text>
+          <mj-text>VAT No: 56565656</mj-text>
+        </mj-column>
+      </mj-section>
+
+      <!-- User Invoice Heading -->
+      <mj-section>
+        <mj-column>
+          <mj-text font-size="24px" font-weight="bold" align="center" text-decoration="underline" padding-bottom="10px">User Invoice</mj-text>
+        </mj-column>
+      </mj-section>
+
+      <!-- User Information and Invoice Details -->
+      <mj-section>
+        <mj-column width="45%">
+          <mj-text font-weight="bold">User Information:</mj-text>
+          <mj-text>User Name: <%= cartExist.userId.name %></mj-text>
+          <mj-text>Address: 123 Main St, City</mj-text>
+          <mj-text>Email: <%= cartExist.userId.email %></mj-text>
+          <mj-text>User ID: <%= cartExist.userId._id %></mj-text>
+        </mj-column>
+        <mj-column width="5%"></mj-column>
+        <mj-column width="50%">
+          <mj-text font-weight="bold">Invoice Details:</mj-text>
+          <mj-text>Invoice Number: <%= cartExist._id %></mj-text>
+          <mj-text>Date: October 31, 2023</mj-text>
+          <mj-text>Order ID: 789012</mj-text>
+        </mj-column>
+      </mj-section>
+
+      <!-- Product Table with CSS Borders -->
+      <mj-section>
+        <mj-column>
+          <mj-table table-layout="fixed" css-class="table-style">
+            <tr>
+              <th>S.N</th>
+              <th>Product Name</th>
+              <th>Qty</th>
+              <th>Rate</th>
+              <th>Amount</th>
+            </tr>
+            <!-- Use MJML loops to iterate through items -->
+            <% cartExist.items.forEach((item, index) => { %>
+              <tr>
+                <td><%= index + 1 %></td>
+                <td><%= item.productId.productName %></td>
+                <td><%= item.quantity %></td>
+                <td>$<%= item.productId.price.toFixed(2) %></td>
+                <td>$<%= (item.quantity * item.productId.price).toFixed(2) %></td>
+              </tr>
+            <% }); %>
+          </mj-table>
+        </mj-column>
+      </mj-section>
+
+      <!-- Amount in Words and Grand Total -->
+      <mj-section>
+        <mj-column>
+          <mj-text font-weight="bold">Amount in Words: Twenty Dollars Only</mj-text>
+          <mj-text>Grand Total: $<%= cartExist.price.toFixed(2) %></mj-text>
+        </mj-column>
+      </mj-section>
+
+      <!-- Customer and Store Signatures -->
+      <mj-section>
+        <mj-column>
+          <mj-text font-weight="bold">Customer's Signature:</mj-text>
+          <!-- Add a space for customer's signature here -->
+        </mj-column>
+        <mj-column>
+          <mj-text font-weight="bold">Kanchan Ecommerce Store Signature:</mj-text>
+          <!-- Add a space for your store's signature here -->
+        </mj-column>
+      </mj-section>
+    </mj-container>
+  </mj-body>
+</mjml>

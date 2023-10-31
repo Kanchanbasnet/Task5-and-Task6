@@ -20,7 +20,7 @@ const orderRouter = express.Router();
  *     tags: [Orders]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: cartId
  *         required: true
  *         description: Id of the Cart.
  *         schema:

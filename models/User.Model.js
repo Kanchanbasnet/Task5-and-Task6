@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
     },
     email:{
         type:String,
+        required:true
     },
     
     address:{
@@ -27,10 +28,8 @@ const userSchema = new mongoose.Schema({
         type:String,
        
         
-    },
-    filename:{
-        type:String
     }
+  
     
     
 }, {timestamps:true})
