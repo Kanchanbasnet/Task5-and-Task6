@@ -1,9 +1,10 @@
 const Store = require('../../models/Store.Model');
 const User = require('../../models/User.Model');
+const Product = require('../../models/Product.Model')
 
 exports.createStore = async (req, res) => {
   try {
-    const { userId, storeName } = req.body;
+    const { userId, storeName, storeType } = req.body;
 
     
     const storeExist = await Store.findOne({ storeName });
@@ -11,6 +12,7 @@ exports.createStore = async (req, res) => {
     if (storeExist) {
       return res.status(400).send("Store already exists");
     }
+    const matchingProducts = await Product.find({ productType: storeType });
 
     
     const store = new Store({
@@ -24,6 +26,7 @@ exports.createStore = async (req, res) => {
         type: "Point",
         coordinates: [parseFloat(req.body.latitude), parseFloat(req.body.longitude)],
       },
+      products: matchingProducts.map((product) => product._id),
     });
 
     const storeData = await store.save();

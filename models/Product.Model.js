@@ -20,8 +20,9 @@ const productSchema = new mongoose.Schema({
         required: true,
     },
     productType:{
-        type: String,
-        required: true,
+        type:String,
+        enum: ['Electronics','Grocery','Clothing','Stationery' ],
+        required:true,
     },
     image:{
         type:String,

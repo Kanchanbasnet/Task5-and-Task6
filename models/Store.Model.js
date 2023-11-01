@@ -24,6 +24,7 @@ const storeSchema = new mongoose.Schema({
     location:{
         type:{
             type:String,
+            index: '2dsphere',
             enum :['Point'],
             default:'Point' },
         coordinates:{
@@ -44,6 +45,6 @@ const storeSchema = new mongoose.Schema({
     }],
 },{timestamps:true}
 )
-storeSchema.index({location:'2dsphere'});
+// storeSchema.index({location:'2dsphere'});
 
 module.exports = mongoose.model('Store', storeSchema );

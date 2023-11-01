@@ -9,7 +9,6 @@
         <mj-column width="50%">
           <mj-text font-size="20px" font-weight="bold">Kanchan Ecommerce Store</mj-text>
           <mj-text>Address: Chakrapath, Kathmandu</mj-text>
-          <mj-text>Telephone: 9849614464</mj-text>
           <mj-text>VAT No: 56565656</mj-text>
         </mj-column>
       </mj-section>
@@ -26,16 +25,12 @@
         <mj-column width="45%">
           <mj-text font-weight="bold">User Information:</mj-text>
           <mj-text>User Name: <%= cartExist.userId.name %></mj-text>
-          <mj-text>Address: 123 Main St, City</mj-text>
           <mj-text>Email: <%= cartExist.userId.email %></mj-text>
           <mj-text>User ID: <%= cartExist.userId._id %></mj-text>
         </mj-column>
         <mj-column width="5%"></mj-column>
         <mj-column width="50%">
-          <mj-text font-weight="bold">Invoice Details:</mj-text>
-          <mj-text>Invoice Number: <%= cartExist._id %></mj-text>
           <mj-text>Date: October 31, 2023</mj-text>
-          <mj-text>Order ID: 789012</mj-text>
         </mj-column>
       </mj-section>
 
@@ -64,25 +59,13 @@
         </mj-column>
       </mj-section>
 
-      <!-- Amount in Words and Grand Total -->
       <mj-section>
         <mj-column>
-          <mj-text font-weight="bold">Amount in Words: Twenty Dollars Only</mj-text>
           <mj-text>Grand Total: $<%= cartExist.price.toFixed(2) %></mj-text>
         </mj-column>
       </mj-section>
 
-      <!-- Customer and Store Signatures -->
-      <mj-section>
-        <mj-column>
-          <mj-text font-weight="bold">Customer's Signature:</mj-text>
-          <!-- Add a space for customer's signature here -->
-        </mj-column>
-        <mj-column>
-          <mj-text font-weight="bold">Kanchan Ecommerce Store Signature:</mj-text>
-          <!-- Add a space for your store's signature here -->
-        </mj-column>
-      </mj-section>
+      
     </mj-container>
   </mj-body>
 </mjml>
